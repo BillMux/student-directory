@@ -12,10 +12,23 @@ students = [
     "Joffrey Baratheon",
     "Norman Bates"
     ]
-puts "The students of Villains Academy"
-puts "----------------"
+    
+def print_header
+    puts "The students of Villains Academy"
+    puts "----------------"
+end
+
+def print(names)
+    puts names
+end
+
+def print_footer(names)
+    print "Overall we have #{names.count} great students"
+end
 puts students
 puts
-# finally, we print the total number of students
-print "Overall we have #{students.count} great students"
-# it's important that print doesn't add new line characters
+# nothing happens until we call the methods
+
+print_header
+print(students)
+print_footer(students)
