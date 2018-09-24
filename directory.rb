@@ -1,5 +1,4 @@
 # first, we print the list of students
-student_count = 11
 students = [
     "Dr. Hannibal Lecter",
     "Darth Vader",
@@ -18,5 +17,5 @@ puts "----------------"
 puts students
 puts
 # finally, we print the total number of students
-print "Overall we have #{student_count} great students"
+print "Overall we have #{students.count} great students"
 # it's important that print doesn't add new line characters
