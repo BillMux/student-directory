@@ -17,6 +17,7 @@ def print_menu
 end
 
 def process(selection)
+    load_students
     case selection
         when '1'
             input_students
@@ -41,11 +42,15 @@ def input_students
     while !name.empty? do
         puts "Now enter their cohort"
         cohort = STDIN.gets.chomp
-        @students << {name: name, cohort: cohort.to_sym}
+        push_to_students(name, cohort)
         puts "Now we have #{@students.count} students"
-        puts "Enter another student?"
+        puts "Enter another student? Press return to go back to menu"
         name = STDIN.gets.chomp
     end
+end
+
+def push_to_students(name, cohort)
+    @students << {name: name, cohort: cohort.to_sym}
 end
 
 def print_header
@@ -125,7 +130,7 @@ def load_students(filename = "students.csv")
     file = File.open("students.csv", "r")
     file.readlines.each do |line|
         name, cohort = line.chomp.split(',')
-        @students << {name: name, cohort: cohort.to_sym}
+        push_to_students(name, cohort)
     end
     file.close
 end
