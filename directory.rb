@@ -15,14 +15,16 @@ def input_students
 end
 
 def print_header
-    puts "The students of Villains Academy"
-    puts "----------------"
+    line_width = 60
+    puts("The students of Villains Academy".center(line_width))
+    puts("----------------".center(line_width))
 end
 
 def print(students)
+    line_width = 30
     students.each_with_index do |student, number|
         if student[:name].length < 12
-        puts "#{number+1}. #{student[:name]} (#{student[:cohort]} cohort)"
+        puts "#{number+1}. #{student[:name]}".ljust(line_width) + "#{student[:cohort]} cohort)".rjust(line_width)
         end
     end
 end
@@ -31,7 +33,6 @@ def print_footer(students)
     puts "Overall we have #{students.count} great students"
 end
 
-# nothing happens until we call the methods
 students = input_students
 print_header
 print(students)
