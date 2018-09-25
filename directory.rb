@@ -1,62 +1,41 @@
+@students = []
 def interactive_menu
-    students = []
+    @students = []
     loop do
-        # 1. print the menu and ask the user what to do
-        puts "1. Input the students"
-        puts "2. Show the students"
-        puts "9. Exit" # 9 because we'll be adding more items
-        # 2. read the input and save it into a variable
-        selection = gets.chomp
+        print_menu
+    # 2. read the input and save it into a variable
+        process(gets.chomp)
         # 3. do what the user has asked
-        case selection
+
+    end
+end
+
+def process(selection)
+    case selection
         when '1'
-            students = input_students
+            input_students
         when '2'
-            print_header
-            print(students)
-            print_footer(students)
+            show_students
         when '9'
             exit # this will cause the program to terminate
         else
             puts "I don't know what you meant, try again"
-        end
     end
 end
 
-
 def input_students
-    calendar = {
-        :january   => 1,
-        :february  => 2,
-        :march     => 3,
-        :april     => 4,
-        :may       => 5,
-        :june      => 6,
-        :july      => 7,
-        :august    => 8,
-        :september => 9,
-        :october   => 10,
-        :november  => 11,
-        :december  => 12
-    }
     puts "Please enter the names of the students, followed by their cohort"
     puts "To finish, just hit return twice"
-    students = []
+    @students = []
     name = gets.chomp
     while !name.empty? do
         puts "Now enter their cohort"
         cohort = gets.chomp
-        students << {name: name, cohort: cohort.to_sym}
-        calendar.each do |month, num|
-            if month == cohort.to_sym
-                students.sort_by! {num}
-            end
-        end
-        puts "Now we have #{students.count} students"
+        @students << {name: name, cohort: cohort.to_sym}
+        puts "Now we have #{@students.count} students"
         puts "Enter another student?"
         name = gets.chomp
     end
-    students
 end
 
 def print_header
@@ -80,7 +59,44 @@ def print_footer(students)
     else
         puts "Overall we have #{students.count} great students"
     end
+    puts
 end
 
+def print_menu
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit" # 9 because we'll be adding more items
+end
+
+def show_students
+    print_header
+    print(@students)
+    group_by_cohort
+    print_footer(@students)    
+end
+
+def group_by_cohort
+  group_by_cohort = {}
+
+  @students.each do |student|
+    cohort = student[:cohort]
+    name  = student[:name]
+
+    if group_by_cohort[cohort] == nil
+      group_by_cohort[cohort] = [name]
+    else
+      group_by_cohort[cohort].push(name)
+    end
+  end
+
+  group_by_cohort.each do |cohort, students|
+    puts
+    puts "#{cohort} cohort: ".center(60)
+    students.each.with_index(1) do |name, index|
+      puts  "#{index}. #{name}".center(60)
+    end
+  end
+  puts
+end
 
 interactive_menu
