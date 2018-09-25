@@ -28,6 +28,7 @@ def process(selection)
         when '4'
             load_students
         when '9'
+            puts "Goodbye!"
             exit # this will cause the program to terminate
         else
             puts "I don't know what you meant, try again"
@@ -123,6 +124,7 @@ def save_students
         csv_line = student_data.join(',')
         file.puts csv_line
     end
+    puts "Saved!"
     file.close
 end
 
