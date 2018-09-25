@@ -48,9 +48,9 @@ end
 
 def print_footer(students)
     if students.count == 1
-        puts "Overall we have #{students.count} great student"
+        puts "Overall we have 1 great student"
     elsif students.count == 0
-        puts "We have no students :("
+        puts "We currently have no students "
     else
         puts "Overall we have #{students.count} great students"
     end
