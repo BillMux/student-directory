@@ -46,8 +46,12 @@ end
 
 def print(students)
     line_width = 30
-    students.each_with_index do |student, number|
-        puts "#{number+1}. #{student[:name]}".ljust(line_width) + "#{student[:cohort]} cohort".rjust(line_width)
+    accumulator = 0
+    students.map.with_index do |student, index|
+        until accumulator do
+        puts "#{index+1}. #{student[:name]}".ljust(line_width) + "#{student[:cohort]} cohort".rjust(line_width)
+        accumulator += 1
+        end
     end
 end
 
@@ -91,7 +95,7 @@ def group_by_cohort
 
   group_by_cohort.each do |cohort, students|
     puts
-    puts "#{cohort} cohort: ".center(60)
+    puts "#{cohort} cohort:".center(60)
     students.each.with_index(1) do |name, index|
       puts  "#{index}. #{name}".center(60)
     end
