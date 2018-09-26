@@ -1,3 +1,4 @@
+require "csv"
 @students = []
 
 def interactive_menu
@@ -29,7 +30,7 @@ def process(selection)
             load_students
         when '9'
             puts "Goodbye!"
-            exit # this will cause the program to terminate
+            exit
         else
             puts "I don't know what you meant, try again"
     end
@@ -115,38 +116,36 @@ def group_by_cohort
 end
 
 def save_students
-    # open the file for writing
-    file = File.open("students.csv" , "w")
-    
-    # iterate over the array of students
-    @students.each do |student|
-        student_data = [student[:name], student[:cohort]]
-        csv_line = student_data.join(',')
-        file.puts csv_line
+    file = CSV.open("students.csv" , "wb") do |csv|
+        @students.each do |student|
+            csv << [student[:name], student[:cohort]]
+        end
     end
     puts "Saved!"
-    file.close
 end
 
 def load_students(filename = "students.csv")
-    file = File.open("students.csv", "r")
-    file.readlines.each do |line|
-        name, cohort = line.chomp.split(',')
-        push_to_students(name, cohort)
+    CSV.foreach("students.csv") do |row|
+        file = File.open("students.csv", "r")
+        file.readlines.each do |line|
+            name, cohort = line.chomp.split(',')
+            push_to_students(name, cohort)
+        end
     end
-    file.close
+    puts "Loaded!"
 end
 
 def try_load_students
-    filename = ARGV.first # first argument from the command line
-    return if filename.nil? # get out of the method if it isn't given
-    if File.exists?(filename) # if it exists
+    filename = ARGV.first
+    return if filename.nil?
+    if File.exists?(filename)
         load_students(filename)
         puts "Loaded #{students.count} from #{filename}"
-    else # if it doesn't exist
+    else
         puts "Sorry, #{filename} doesn't exist"
         exit
     end
 end
 
+try_load_students
 interactive_menu
